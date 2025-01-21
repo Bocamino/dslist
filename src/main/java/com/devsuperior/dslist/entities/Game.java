@@ -23,10 +23,15 @@ public class Game {
 	@Column(name = "game_year") // nome do "year" pode dar problema com um comando já reconhecido dentro do SQL. Precisa ser mudado na Tabela
 	private int year;
 	private String genre;
-	private String plataforma;
+	private String platforms;
 	private double score;
 	private String imgUrl;
+	
+	@Column(columnDefinition = "TEXT")
+	// Instrução para JPA, na hora de gerar o Banco, gere esse campo como se fosse um "texto" (sem tamanho limite), e não um "varchar" de 255
 	private String shortDescription;
+	
+	@Column(columnDefinition = "TEXT")
 	private String longDescription;
 	
 	// Construtor vazio da classe
@@ -36,14 +41,14 @@ public class Game {
 	
 	// Construtor preenchido da classe
 	// Atalho: Botão Direito > Source e escolher (no caso foi Generate Constructor Using Fields e selecionamos tudo) OU ALT + SHIFT + S
-	public Game(Long id, String title, int year, String genre, String plataforma, double score, String imgUrl,
+	public Game(Long id, String title, int year, String genre, String platforms, double score, String imgUrl,
 			String shortDescription, String longDescription) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.year = year;
 		this.genre = genre;
-		this.plataforma = plataforma;
+		this.platforms = platforms;
 		this.score = score;
 		this.imgUrl = imgUrl;
 		this.shortDescription = shortDescription;
@@ -83,12 +88,12 @@ public class Game {
 		this.genre = genre;
 	}
 
-	public String getPlataforma() {
-		return plataforma;
+	public String getPlatforms() {
+		return platforms;
 	}
 
-	public void setPlataforma(String plataforma) {
-		this.plataforma = plataforma;
+	public void setPlatforms(String plataforma) {
+		this.platforms = plataforma;
 	}
 
 	public double getScore() {
