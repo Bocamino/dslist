@@ -21,10 +21,10 @@ public class Game {
 	private String title;
 	
 	@Column(name = "game_year") // nome do "year" pode dar problema com um comando já reconhecido dentro do SQL. Precisa ser mudado na Tabela
-	private int year;
+	private Integer year;
 	private String genre;
 	private String platforms;
-	private double score;
+	private Double score;
 	private String imgUrl;
 	
 	@Column(columnDefinition = "TEXT")
@@ -34,6 +34,12 @@ public class Game {
 	@Column(columnDefinition = "TEXT")
 	private String longDescription;
 	
+	/*
+	 * Se você está utilizando JPA para gerenciar sua conexão com o banco de dados, a recomendação geral é usar as classes wrapper (Integer, Double, etc.) 
+	 * em vez dos tipos primitivos (int, double, etc.). Isso porque o JPA trabalha diretamente com bancos de dados, onde os valores podem ser NULL, e os tipos 
+	 * primitivos não suportam essa condição.
+	 */
+	
 	// Construtor vazio da classe
 	public Game() {
 		
@@ -41,9 +47,10 @@ public class Game {
 	
 	// Construtor preenchido da classe
 	// Atalho: Botão Direito > Source e escolher (no caso foi Generate Constructor Using Fields e selecionamos tudo) OU ALT + SHIFT + S
-	public Game(Long id, String title, int year, String genre, String platforms, double score, String imgUrl,
+	public Game(Long id, String title, Integer year, String genre, String platforms, Double score, String imgUrl,
 			String shortDescription, String longDescription) {
-		super();
+		super(); // É usado para chamar o construtor da classe pai (superclasse) a partir do construtor da classe filha
+				 // Pode ser apagada nesse caso, pois a classe Game não está herdando de nenhuma outra classe personalizada
 		this.id = id;
 		this.title = title;
 		this.year = year;
@@ -76,7 +83,7 @@ public class Game {
 		return year;
 	}
 
-	public void setYear(int year) {
+	public void setYear(Integer year) {
 		this.year = year;
 	}
 
@@ -100,7 +107,7 @@ public class Game {
 		return score;
 	}
 
-	public void setScore(double score) {
+	public void setScore(Double score) {
 		this.score = score;
 	}
 
