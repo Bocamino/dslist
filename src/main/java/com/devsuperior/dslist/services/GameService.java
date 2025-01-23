@@ -6,8 +6,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.devsuperior.dslist.dto.GameDTO;
 import com.devsuperior.dslist.dto.GameMinDTO;
 //import com.devsuperior.dslist.dto.GameMinDTO;
 import com.devsuperior.dslist.entities.Game;
@@ -21,7 +23,17 @@ public class GameService {
 	@Autowired
 	private GameRepository gameRepository;
 	
+	// Método para buscar por ID
+	@Transactional(readOnly = true) // Obedece os princípios das transações: "ACID" = Atômica, Consistente, Isolada e Durável. Essa biblioteca é do SPRING (atentar na hora de importar)
+	public GameDTO findById(Long id) {	// "readonly" pois NÃO vamos fazer operações de escrita. Deixa o Banco mais rápido dessa forma
+		Game result = gameRepository.findById(id).get();
+		GameDTO dto = new GameDTO(result);
+		return dto;
+		// OU "return new GameDTO(result);
+	}
+	
 	@GetMapping
+	@Transactional(readOnly = true)
 	public List<GameMinDTO> findAll(){
 		List<Game> result = gameRepository.findAll();
 		List<GameMinDTO> dto = result.stream().map(x -> new GameMinDTO(x)).toList();
